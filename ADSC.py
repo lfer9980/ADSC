@@ -5,17 +5,42 @@ import os
 
 global V1,V2,V2_1, v2_2, V3, V4, V5, V5_l1, V5_l2, EV5_l1, EV5_l2, EV5_l3, EV5_l4
 
-v_etapa = None
-v_shock = None
+v_etapa = "etapa progresiva"
+v_shock = "hemorragico"
+main_window = None
+
+
+def capturar_datos():
+    global V1, V4, V5, EV5_l1, EV5_l2, EV5_l3, EV5_l4
+
+    dato1 = EV5_l1.get()
+    dato2 = EV5_l2.get()
+    dato3 = EV5_l3.get()
+    dato4 = EV5_l4.get()
+
+    reporte = open("Reporte.txt", "w")
+
+    reporte.write("INFORME MEDICO A. D. S. C.\n\n")
+    reporte.write("Datos del paciente:\n\n")
+    reporte.write("Edad: "+dato1+"\n")
+    reporte.write("Sexo: "+dato2+"\n")
+    reporte.write("Alergias: "+dato3+"\n")
+    reporte.write("Antecedentes cardiovasculares: "+dato4)
+
+    reporte.close()
+    
+    V5.destroy()
+
 
 def v5():
     global V5, EV5_l1, EV5_l2, EV5_l3, EV5_l4
     
     #ventana5()
+    V4.destroy()
     V5=Tk()
-    V5.title("ventana #4")
+    V5.title("A.D.S.C.")
     V5.geometry("1920x1080")
-    V5.config(bg="black")
+    V5.config(bg="black", padx = 20)
     
     #texto titulo
     V5_lpaso4=Label(V5,text="Paso 4: Datos del paciente.", font=("Verdana regular",50),bg="black",fg="DarkOrange")
@@ -26,42 +51,42 @@ def v5():
     V5_lin.place(x=100, y=120)
 
     #Dato 1 texto.
-    V5_l1=Label(V5,text="Edad:",font=("Verdana regular",30),bg="black",fg = "dodger blue")
+    V5_l1=Label(V5,text="Edad:",font=("Verdana regular",20),bg="black",fg = "dodger blue")
     V5_l1.place(x=250, y=250)
     EV5_l1=Entry(V5,font=("Verdana regular",20))
     EV5_l1.place(x=250,y=310)
     EV5_l1.focus_set()
 
     #Dato 2 texto.
-    V5_l2=Label(V5,text="Sexo:",font=("Verdana regular",30),bg="black",fg = "dodger blue")
+    V5_l2=Label(V5,text="Sexo:",font=("Verdana regular",20),bg="black",fg = "dodger blue")
     V5_l2.place(x=250, y=470)
     EV5_l2=Entry(V5,font=("Verdana regular",20))
     EV5_l2.place(x=250,y=530)
     EV5_l2.focus_set()
 
     #Dato 3 texto.
-    V5_l3=Label(V5,text="Alergias:",font=("Verdana regular",30),bg="black",fg = "dodger blue")
+    V5_l3=Label(V5,text="Alergias:",font=("Verdana regular",20),bg="black",fg = "dodger blue")
     V5_l3.place(x=900, y=250)
     EV5_l3=Entry(V5,font=("Verdana regular",20))
     EV5_l3.place(x=900,y=310)
     EV5_l3.focus_set()
 
     #Dato 4 texto.
-    V5_l4=Label(V5,text="Antecedentes \nvasculares:",font=("Verdana regular",30),bg="black",fg = "dodger blue")
+    V5_l4=Label(V5,text="Antecedentes \nvasculares:",font=("Verdana regular",20),bg="black",fg = "dodger blue")
     V5_l4.place(x=900, y=430)
     EV5_l4=Entry(V5,font=("Verdana regular",20))
     EV5_l4.place(x=900,y=530)
     EV5_l4.focus_set()
 
     #botton Terminado.
-    V5_b1 =Button(V5, text="Terminado",font=("Verdana regular",25), bg="red3", fg="white", command = F_ter)
+    V5_b1 =Button(V5, text="Terminado",font=("Verdana regular",25), bg="red3", fg="white", command = capturar_datos)
     V5_b1 .place(x=700, y=700)
 
     V5.mainloop()
 
 
 def v4():
-    global V4
+    global V4, v_etapa, v_shock
 
     v_in1 = None
     v_in2 = None
@@ -70,19 +95,20 @@ def v4():
     
     V3.destroy() 
     V4=Tk()
-    V4.title("Paso 3.")
+    V4.title("A.D.S.C.")
     V4.geometry("1920x1080")
-    V4.config(bg="black", padx = 40)
-    
-    V4_lpaso3 = Label(V4, text = 'Paso 3: DIAGNOSTICO', font = ("Verdana regular",50), bg = "black", fg = "DarkOrange").place(x = 400, y = 30) #texto paso 3
+    V4.config(bg="black")
 
-    V4_l5 = Label(V4, text = 'Esperamos haberte sido de ayuda.', font = ("Verdana regular", 30, 'bold'), bg = "black", fg = "white").place(x = 450, y = 620) #texto Esperamos haberte sido de ayuda
 
-    V4_b1 = Button(V4, text = 'Finalizar', command = v5, font = ("Verdana regular",25), bg = "red3", fg = "white").place(x = 700, y = 700) #Boton Finalizar
+    V4_lpaso3 = Label(V4, text = 'Paso 3: DIAGNOSTICO', font = ("Verdana regular",40), bg = "black", fg = "DarkOrange").place(x = 400, y = 30) #texto paso 3
 
-    if (v_etapa == 'Progresiva'):
+    V4_l5 = Label(V4, text = 'Esperamos haberte sido de ayuda.', font = ("Verdana regular", 20, 'bold'), bg = "black", fg = "white").place(x = 450, y = 620) #texto Esperamos haberte sido de ayuda
 
-        V4_lin = Label(V4, text = 'Por favor sigue las instrucciones:', font = ("Verdana regular",40), bg = "black", fg = "white").place(x = 100, y = 120) #texto Sigue las instrucciones
+    V4_b1 = Button(V4, text = 'Finalizar', command = v5, font = ("Verdana regular",18), bg = "red3", fg = "white").place(x = 700, y = 700) #Boton Finalizar
+
+    if (v_etapa == 'etapa progresiva'):
+
+        V4_lin = Label(V4, text = 'Por favor sigue las instrucciones:', font = ("Verdana regular",20), bg = "black", fg = "white").place(x = 100, y = 120) #texto Sigue las instrucciones
 
         if (v_shock == 'hemorragico'):
 
@@ -91,10 +117,10 @@ def v4():
             v_in3 = 'Administrar oxigeno al paciente.'
             v_in4 = 'Aplicar una dosis de glucocorticoides al paciente.'
 
-            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
-            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
-            V4_l3 = Label(V4, text = '3. ' + v_in3, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 420) #texto Instruccion 3
-            V4_l4 = Label(V4, text = '4. ' + v_in4, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 520) #texto Instruccion 4
+            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
+            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
+            V4_l3 = Label(V4, text = '3. ' + v_in3, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 420) #texto Instruccion 3
+            V4_l4 = Label(V4, text = '4. ' + v_in4, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 520) #texto Instruccion 4
 
         elif (v_shock == 'hipovolemico'):
 
@@ -102,37 +128,37 @@ def v4():
             v_in2 = 'Sustitutos de plasma (Dextrano).'
             v_in3 = 'Aplicar una dosis de glucocorticoides al paciente.'
 
-            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
-            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
-            V4_l3 = Label(V4, text = '3. ' + v_in3, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 420) #texto Instruccion 3
+            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
+            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
+            V4_l3 = Label(V4, text = '3. ' + v_in3, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 420) #texto Instruccion 3
 
         elif (v_shock == 'neurogeno' or v_shock == 'anafilactico'):
 
             v_in1 = 'Administrar farmacos simpaticomimeticos \ncomo Noradrenalina y adrenalina.'
 
-            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
+            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
 
         elif (v_shock == 'septico'):
 
             v_in1 = 'Administrar oxigeno al paciente.'
             v_in2 = 'Aplicar una dosis de glucocorticoides al paciente.'
 
-            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
-            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
+            V4_l1 = Label(V4, text = '1. ' + v_in1, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 220) #texto Instruccion 1
+            V4_l2 = Label(V4, text = '2. ' + v_in2, font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
 
         else:
 
-            V4_l2 = Label(V4, text = 'Lo sentimos, no tenemos informacion de tal shock', font = ("Verdana regular",30), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
+            V4_l2 = Label(V4, text = 'Lo sentimos, no tenemos informacion de tal shock', font = ("Verdana regular",18), bg = "black",fg = "dodger blue").place(x = 250, y = 320) #texto Instruccion 2
 
-    elif (v_etapa == 'Irreversible'):
+    elif (v_etapa == 'etapa irreversible'):
 
-        V4_lin = Label(V4, text = 'El paciente no cumple con los requerimentos \npara ser salvado', font = ("Verdana regular",40), bg = "black", fg = "red3").place(x = 250, y = 300) #texto shock irreversible 
+        V4_lin = Label(V4, text = 'El paciente no cumple con los requerimentos \npara ser salvado', font = ("Verdana regular",30), bg = "black", fg = "red3").place(x = 250, y = 300) #texto shock irreversible 
                  
 
 def v3():
     global V3, v_etapa, v_shock
     
-    V2_2.destroy()
+    main_window.destroy()
     V3=Tk()
     V3.title("A.D.S.C.")
     V3.geometry('1920x1080')
@@ -168,7 +194,7 @@ def v3():
 
     V3_l2 = Label(
         V3,
-        text = v_etapa,
+        text = "ETAPA PROGRESIVA",
         font = ("Verdana regular",40),
         bg = "black",
         fg = "#46F881")
@@ -194,7 +220,7 @@ def v3():
     
     V3_l4 = Label(
         V3,
-        text = "v_shock",
+        text = "SHOCK HEMORRAGICO",
         font = ("Verdana regular",40),
         bg = "black",
         fg = "#FE2543")
@@ -239,10 +265,8 @@ def siguiente_v2_2():
     global V2_2
 
     V2_1.destroy()
-    V2_2=Tk()
-    V2_2.title("A.D.S.C.")
-    V2_2.geometry('1920x1080')
-    V2_2.config(bg='black', padx = 40)
+    V2_2 = Frame(main_window, bg = "black")
+    V2_2.grid(row = 0,column = 0)
 
     #variables pregunta 13
     p13_varSi = IntVar ()
@@ -535,10 +559,8 @@ def siguiente_v2_1():
     global V2, V2_1
 
     V2.destroy()
-    V2_1=Tk()
-    V2_1.title("A.D.S.C.")
-    V2_1.geometry('1920x1080')
-    V2_1.config(bg='black', padx = 40)
+    V2_1 = Frame(main_window, bg = "black")
+    V2_1.grid(row = 0,column = 0)
 
     #variables pregunta 7
     p7_varSi = IntVar ()
@@ -774,7 +796,7 @@ def siguiente_v2_1():
         justify = LEFT,
         font = ("Verdana regular", 15))
     V2_l11.grid(
-        row = 9,
+        row = 10,
         column = 0,
         columnspan = 2,
         sticky = 'NSW',
@@ -792,7 +814,7 @@ def siguiente_v2_1():
         selectcolor = "black",
         font = ("Verdana bold", 15))
     cb_p11_Si.grid(
-        row = 10,
+        row = 11,
         column = 0,
         sticky = 'NSW',
         pady = 5)
@@ -808,7 +830,7 @@ def siguiente_v2_1():
         selectcolor = "black",
         font = ("Verdana bold", 15))
     cb_p11_No.grid(
-        row = 11,
+        row = 12,
         column = 0,
         sticky = 'NSW',
         pady = 5)
@@ -822,7 +844,7 @@ def siguiente_v2_1():
         justify = LEFT,
         font = ("Verdana regular", 15))
     V2_l12.grid(
-        row = 9,
+        row = 10,
         column = 2,
         columnspan = 2,
         sticky = 'NSW',
@@ -840,7 +862,7 @@ def siguiente_v2_1():
         selectcolor = "black",
         font = ("Verdana bold", 15))
     cb_p12_Si.grid(
-        row = 10,
+        row = 11,
         column = 2,
         sticky = 'NSW',
         pady = 5)
@@ -856,7 +878,7 @@ def siguiente_v2_1():
         selectcolor = "black",
         font = ("Verdana bold", 15))
     cb_p12_No.grid(
-        row = 11,
+        row = 12,
         column = 2,
         sticky = 'NSW',
         pady = 5)
@@ -871,7 +893,7 @@ def siguiente_v2_1():
         fg = "white",
         font = ("Verdana bold", 18))
     V2_b2.grid(
-        row = 12,
+        row = 13,
         column = 3,
         sticky = 'NESW',
         padx = 20,
@@ -879,14 +901,17 @@ def siguiente_v2_1():
 
 
 def v2():
-    global V2, v_etapa, v_shock
+    global V2, v_etapa, v_shock, main_window
     #pantalla 2
 
     V1.destroy()
-    V2=Tk()
-    V2.title("A.D.S.C.")
-    V2.geometry('1920x1080')
-    V2.config(bg='black', padx = 40)
+    main_window=Tk()
+    main_window.title("A.D.S.C.")
+    main_window.geometry('1920x1080')
+    main_window.config(bg='black', padx = 40)
+
+    V2= Frame(main_window, bg = "black")
+    V2.grid(row = 0,column = 0)
 
     #variables preguntas 1
     p1_var1 = IntVar()
@@ -921,11 +946,11 @@ def v2():
         global v_etapa
         if (p1_var1.get() == 1) or (p1_var2.get() == 1) or (p1_var3.get() == 1) or (p1_var4.get() == 0) or (p1_var5.get() == 0) or (p1_var.get() == 0):
             if (p3_var1.get() == 1) or (p3_var2.get() == 1) or (p3_var3.get() == 1) or (p3_var4.get() == 0):
-                v_etapa = "Etapa progresiva"
+                v_etapa = "etapa progresiva"
             elif (p3_var1.get() == 0) or (p3_var2.get() == 0) or (p3_var3.get() == 0) or (p3_var4.get() == 1):
-                v_etapa = "Etapa irreversible"
+                v_etapa = "etapa irreversible"
         elif (p1_var1.get() == 0) or (p1_var2.get() == 0) or (p1_var3.get() == 0) or (p1_var4.get() == 1) or (p1_var5.get() == 1) or (p1_var.get() == 1):
-                v_etapa = "Etapa irreversible"
+                v_etapa = "etapa irreversible"
 
 
     #elementos de la pantalla 2
@@ -1411,7 +1436,7 @@ def v1():
     V1.geometry('1920x1080')
     V1.config(bg='black')
     
-    V1_l1 = Label (V1, text = 'Analisis Diagnostico de Shock Circulatorio', font = ('Verdana regular', 40, 'bold'), bg = 'black', fg = 'white').place(x = 70, y = 20) #texto titulo
+    V1_l1 = Label (V1, text = 'Analisis Diagnostico de Shock Circulatorio', font = ('Verdana regular', 50, 'bold'), bg = 'black', fg = 'white').place(x = 70, y = 20) #texto titulo
 
     imgLogo = Image.open('logo.png')
     imgLogo = imgLogo.resize((450, 450), Image.ANTIALIAS)
